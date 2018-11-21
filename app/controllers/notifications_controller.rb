@@ -2,7 +2,16 @@ class NotificationsController < ApplicationController
 
   def receive
     Notification.create device_id: params[:device_id]
-    Faraday.post 'fsf-rails-notif-staging.herokuapp.com/messages', { :device_id: params[:device_id] }
+    response = Faraday.post 'http://fsf-rails-notif-staging.herokuapp.com/messages', { device_id: params[:device_id] }
+    render plain: response.body
+  end
+
+  def index
+    render json: Notification.all
+  end
+
+  def sanitycheck
+    render plain: "Yes I'm alive mom"
   end
 
 end
