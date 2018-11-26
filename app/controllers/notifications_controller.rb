@@ -17,10 +17,12 @@ class NotificationsController < ApplicationController
   end
 
   def register
-    if Device.find_by(uuid: params[:uuid]).nil?
+    device = Device.find_by(uuid: params[:uuid])
+    if device.nil?
       Device.create version: params[:version], type: params[:type], uuid: params[:uuid]
       render plain: "Registered Device"
     else
+      device.update version: params[:version], type: params[:type]
       render plain: "Device already registered"
     end
   end
