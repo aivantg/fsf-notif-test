@@ -2,7 +2,7 @@
   <h2>Device Name: <%= device.name %></h2>
   Device API Level: <%= device.version %><br/>
   Device ID: <%= device.uuid %><br/>
-  Device Type: <%= device.type %><br/>
+  Device Type: <%= device.type %><br/><br/>
   <% device.notifications.each do |notif| %>
     Num Updates: <%= notif.updates %>, Timestamp: <%= notif.created_at.in_time_zone('America/Los_Angeles').strftime('%-m/%-d/%y %l:%M %p') %>
     <br/>
