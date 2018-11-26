@@ -1,15 +1,17 @@
 class NotificationsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def create
-    d = Device.find_by(uuid: params[:uuid])
-    response = "Recorded Notification"
-    if d.nil?
-      d = Device.create uuid: params[:uuid]
-      response = "No registered device. Recording anyway"
-    end
+    if params[:uuid]
+      d = Device.find_by(uuid: params[:uuid])
+      response = "Recorded Notification"
+      if d.nil?
+        d = Device.create uuid: params[:uuid]
+        response = "No registered device. Recording anyway"
+      end
 
-    Notification.create device: d, updates: params[:updates]
-    render plain: response
+      Notification.create device: d, updates: params[:updates]
+      render plain: response
+    end
   end
 
   def index
