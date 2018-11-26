@@ -10,7 +10,6 @@ class NotificationsController < ApplicationController
 
     Notification.create device: d, updates: params[:updates]
     render plain: response
-    end
   end
 
   def index
