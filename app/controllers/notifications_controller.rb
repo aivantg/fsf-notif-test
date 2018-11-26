@@ -1,18 +1,33 @@
 class NotificationsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
   def create
-    Notification.create device_id: params[:device_id]
-    # response = Faraday.post 'http://fsf-rails-notif-staging.herokuapp.com/messages', { device_id: params[:device_id] }
-    render plain: "woo you did it"
+    d = Device.find_by(uuid: params[:uuid])
+    response = "Recorded Notification"
+    if d.nil?
+      d = Device.create uuid: params[:uuid]
+      response = "No registered device. Recording anyway"
+    end
+
+    Notification.create device: d, updates: params[:updates]
+    render plain: response
+    end
   end
 
   def index
-    @notifications = Notification.all
-    @devices = @notifications.group_by(&:device_id)
+    @devices = Device.all
   end
 
-  def sanitycheck
-    render plain: "Yes I'm alive mom"
+  def register
+    if Device.find_by(uuid: params[:uuid]).nil?
+      Device.create version: params[:version], type: params[:type], uuid: params[:uuid]
+      render plain: "Registered Device"
+    else
+      render plain: "Device already registered"
+    end
+  end
+
+  def home
+    redirect_to notifications_index_path
   end
 
 end
