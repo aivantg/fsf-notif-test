@@ -7,7 +7,8 @@ class NotificationsController < ApplicationController
   end
 
   def index
-    render json: Notification.all
+    @notifications = Notification.all
+    @devices = @notifications.group_by(&:device_id)
   end
 
   def sanitycheck

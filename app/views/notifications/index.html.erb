@@ -1,0 +1,6 @@
+<% @devices.keys.each do |device| %>
+  <h2>Device ID: <%= device %></h2>
+  <%= table_for @devices[device] do |table| %>
+      <% table.column :created_at, :formatter => [:strftime, "%m/%d/%y %I:%M %p"] %>
+  <% end %>
+<% end %>
