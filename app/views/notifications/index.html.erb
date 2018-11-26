@@ -1,7 +1,7 @@
 <% @devices.keys.each do |device| %>
   <h2>Device ID: <%= device %></h2>
   <% @devices[device].each do |notif| %>
-    <%= notif.created_at.in_time_zone('America/Los_Angeles').to_formatted_s(:long_ordinal) %>
+    <%= notif.created_at.in_time_zone('America/Los_Angeles').strftime('%-m/%-d/%y %l:%M %p') %>
     <br/>
   <% end %>
 <% end %>
