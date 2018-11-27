@@ -19,6 +19,7 @@ class NotificationsController < ApplicationController
   end
 
   def register
+    puts params
     device = Device.find_by(uuid: params[:uuid])
     if device.nil?
       Device.create version: params[:version], device_type: params[:type], uuid: params[:uuid], app_version: params[:app_version]
